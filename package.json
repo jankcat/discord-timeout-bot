@@ -1,0 +1,24 @@
+{
+  "name": "discord-timeout-bot",
+  "version": "1.0.0",
+  "description": "Timeout everyone. For when your server needs a break.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jankcat/discord-timeout-bot.git"
+  },
+  "author": "Timothy Watkins",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jankcat/discord-timeout-bot/issues"
+  },
+  "homepage": "https://github.com/jankcat/discord-timeout-bot#readme",
+  "dependencies": {
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.27.1",
+    "discord.js": "^13.6.0"
+  }
+}
