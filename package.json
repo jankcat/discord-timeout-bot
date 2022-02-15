@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jankcat/discord-timeout-bot#readme",
   "dependencies": {
+    "@discordjs/builders": "^0.12.0",
     "@discordjs/rest": "^0.3.0",
     "discord-api-types": "^0.27.1",
     "discord.js": "^13.6.0"

@@ -1,42 +1,32 @@
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
 const { Client, Intents } = require('discord.js');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
-
-const commands = [{
-    name: 'bigtimeout',
-    description: 'EVERYBODY JUST SHUT UP FOR 2 MINUTES!'
-}]; 
-
-(async () => {
-    try {
-        console.log('Started refreshing application (/) commands.');
-
-        await rest.put(
-            Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
-            { body: commands },
-        );
-
-        console.log('Successfully reloaded application (/) commands.');
-    } catch (error) {
-        console.error(error);
-    }
-})();
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS ] });
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    client.guilds.tap(guild => console.log(`[${guild.name}] [ready] Rejoining server.`));
     client.user.setActivity('Do you need a time out?');
 });
 
-client.on('interactionCreate', async interaction => {
-    if (!interaction.isCommand()) return;
-
-    if (interaction.commandName === 'bigtimeout') {
-        var timeoutExpiration = new Date(Date.now() + (2 * 60 * 1000) + (15 * 1000));
-        await interaction.reply(`OKAY! EVERYBODY JUST SHUT UP FOR 2 MINUTES! YOU ARE ALL IN A TIME OUT UNTIL ${timeoutExpiration}`);
+client.on('messageCreate', async message => {
+    try {
+        if (message.system || message.author.bot) return;
+        if (message.content.startsWith('/bigtimeout')) {
+            console.log(`[${message.guild.name}][${message.channel.name}] ${message.author.username} thinks everyone needs a time out...`);
+            await message.guild.members.fetch().then(async fetchedMembers => {
+                await fetchedMembers.forEach(async member => {
+                    try {
+                        await member.timeout(2 * 60 * 1000, 'Everyone needed to shut up for 2 minutes.');
+                        console.log(`[${message.guild.name}][${message.channel.name}] ${member.user.username} has been put in time out.`);
+                    } catch (timeoutError) {
+                        console.log(`[${message.guild.name}][${message.channel.name}] ${member.user.username} could not be put in timeout: ${timeoutError}.`);
+                    }
+                });
+            });
+            var timeoutExpiration = new Date(Date.now() + (2 * 60 * 1000) + (15 * 1000));
+            message.channel.send(`OKAY! EVERYBODY JUST SHUT UP FOR 2 MINUTES! YOU ARE ALL IN A TIME OUT UNTIL ${timeoutExpiration}`);
+        }
+    } catch (e) {
+        console.log(e);
     }
 });
 
-client.login(process.env.DISCORD_TOKEN);
+client.login(process.env.DISCORD_TOKEN_TIMEOUT);
