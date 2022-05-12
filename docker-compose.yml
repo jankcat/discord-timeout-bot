@@ -1,7 +1,8 @@
-version: '3'
+version: "3"
 services:
-  mocking:
+  timeout:
     build: .
     environment:
-      - DISCORD_TOKEN_TIMEOUT
+      - DISCORD_CLIENT_TOKEN=
+      - DISCORD_CLIENT_ID=
     restart: unless-stopped

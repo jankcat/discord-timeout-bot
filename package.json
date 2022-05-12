@@ -4,6 +4,7 @@
   "description": "Timeout everyone. For when your server needs a break.",
   "main": "src/index.js",
   "scripts": {
+    "register": "node src/registerCommand.js",
     "start": "node src/index.js"
   },
   "repository": {
@@ -19,7 +20,7 @@
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
     "@discordjs/rest": "^0.3.0",
-    "discord-api-types": "^0.27.1",
+    "discord-api-types": "^0.27.3",
     "discord.js": "^13.6.0"
   }
 }
