@@ -9,7 +9,7 @@ client.on('ready', () => {
 client.on('messageCreate', async message => {
     try {
         if (message.system || message.author.bot) return;
-        if (message.content.startsWith('/bigtimeout')) {
+        if (message.content.startsWith('\bigtimeout')) {
             console.log(`[${message.guild.name}][${message.channel.name}] ${message.author.username} thinks everyone needs a time out...`);
             await message.guild.members.fetch().then(async fetchedMembers => {
                 await fetchedMembers.forEach(async member => {
