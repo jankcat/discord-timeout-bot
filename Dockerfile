@@ -8,9 +8,11 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
+# Get dependencies from npm
 RUN npm install
 
 # Bundle app source
 COPY . .
 
-CMD [ "npm", "start" ]
+# Register slash commands with Discord API, then start the bot
+CMD [ "sh", "-c", "npm run register && npm run start" ]
